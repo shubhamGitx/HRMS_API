@@ -1,24 +1,28 @@
-using System.Text;
-using System.Text.Json.Serialization;
+using hrmsAPI.DAL.Payroll;
+
 using HRMSAPI.AppCode;
-using HRMSAPI.BAL.Login;
-using HRMSAPI.DAL.Login;
-using HRMSAPI.BAL.Navigation;
-using HRMSAPI.DAL.Navigation;
-using HRMSAPI.BAL.Employee;
-using HRMSAPI.DAL.Employee;
-using HRMSAPI.BAL.Dashboard;
-using HRMSAPI.DAL.Dashboard;
 using HRMSAPI.BAL.Account;
-using HRMSAPI.DAL.Account;
-using HRMSAPI.BAL.Office;
-using HRMSAPI.DAL.Office;
+using HRMSAPI.BAL.Dashboard;
+using HRMSAPI.BAL.Employee;
 using HRMSAPI.BAL.Leave;
+using HRMSAPI.BAL.Login;
+using HRMSAPI.BAL.Navigation;
+using HRMSAPI.BAL.Office;
+using HRMSAPI.BAL.Payroll;
+using HRMSAPI.DAL.Account;
+using HRMSAPI.DAL.Dashboard;
+using HRMSAPI.DAL.Employee;
 using HRMSAPI.DAL.Leave;
+using HRMSAPI.DAL.Login;
+using HRMSAPI.DAL.Navigation;
+using HRMSAPI.DAL.Office;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -104,6 +108,12 @@ builder.Services.AddScoped<ILeavePolicyRepository, LeavePolicyRepository>();
 builder.Services.AddScoped<ILeavePolicyService, LeavePolicyService>();
 builder.Services.AddScoped<ILeaveRepository, LeaveRepository>();
 builder.Services.AddScoped<ILeaveService, LeaveService>();
+
+//risha
+builder.Services.AddScoped<PayComponentsDAL>();
+builder.Services.AddScoped<PayComponentsBAL>();
+builder.Services.AddScoped<SalaryConfigurationDAL>();
+builder.Services.AddScoped<SalaryConfigurationBAL>();
 
 var app = builder.Build();
 
