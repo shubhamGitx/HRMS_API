@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace hrmsAPI.MODEL.Payroll
 {
@@ -124,8 +125,27 @@ namespace hrmsAPI.MODEL.Payroll
 
         public long? SalaryStatusId { get; set; }
         public string SalaryStatus { get; set; }
+
+        public int? VersionNo { get; set; }
+        public DateTime? EffectiveFrom { get; set; }
+        public DateTime? EffectiveTo { get; set; }
+        public DateTime? NextIncrementDate { get; set; }
+        public List<SavedSalaryComponentModel> Components { get; set; } = new();
+
+        [JsonIgnore]
+        public string? ComponentsJson { get; set; }
     }
-    
+
+    public class SavedSalaryComponentModel
+    {
+        public long ComponentId { get; set; }
+        public int Priority { get; set; }
+        public string? RuleInput { get; set; }
+        public decimal MonthlyAmount { get; set; }
+        public string? ComponentCode { get; set; }
+        public string? ComponentName { get; set; }
+        public string? ComponentTypeCode { get; set; }
+    }
 
         public class UpdateSalaryHeaderDraftModel
         {

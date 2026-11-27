@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -198,6 +198,19 @@ namespace hrmsAPI.Controllers.Admin
                     message = "Invalid component type ID or calculation type ID."
                 });
             }
+            catch (PostgresException ex)
+                when (ex.SqlState == "22023")
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.MessageText
+                });
+            }
+            catch (PostgresException ex) when (ex.ConstraintName == "ck_basic_matrix_definition")
+            {
+                return BadRequest(new { success = false, message = "Only BASIC can be matrix-linked. BASIC must be a fixed earning with no default amount." });
+            }
             catch (Exception)
             {
                 return StatusCode(500, new
@@ -240,6 +253,19 @@ namespace hrmsAPI.Controllers.Admin
                     success = false,
                     message = "Invalid component type ID or calculation type ID."
                 });
+            }
+            catch (PostgresException ex)
+                when (ex.SqlState == "22023")
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.MessageText
+                });
+            }
+            catch (PostgresException ex) when (ex.ConstraintName == "ck_basic_matrix_definition")
+            {
+                return BadRequest(new { success = false, message = "Only BASIC can be matrix-linked. BASIC must be a fixed earning with no default amount." });
             }
             catch (Exception)
             {
@@ -304,6 +330,10 @@ namespace hrmsAPI.Controllers.Admin
                 }
 
                 return Ok(result);
+            }
+            catch (PostgresException ex) when (ex.ConstraintName == "ck_basic_matrix_definition")
+            {
+                return BadRequest(new { success = false, message = "Only BASIC can be matrix-linked. BASIC must be a fixed earning with no default amount." });
             }
             catch (Exception)
             {

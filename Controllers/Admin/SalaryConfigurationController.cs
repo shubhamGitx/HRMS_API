@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -187,6 +187,10 @@ namespace hrmsAPI.Controllers.Admin
                     Message = ex.Message
                 });
             }
+            catch (Npgsql.PostgresException ex) when (ex.SqlState == "P4501")
+            {
+                return BadRequest(new { success = false, message = ex.MessageText });
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, new
@@ -233,6 +237,10 @@ namespace hrmsAPI.Controllers.Admin
                     Message = ex.Message
                 });
             }
+            catch (Npgsql.PostgresException ex) when (ex.SqlState == "P4501")
+            {
+                return BadRequest(new { success = false, message = ex.MessageText });
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, new
@@ -277,6 +285,10 @@ namespace hrmsAPI.Controllers.Admin
                     Success = false,
                     Message = ex.Message
                 });
+            }
+            catch (Npgsql.PostgresException ex) when (ex.SqlState == "P4501")
+            {
+                return BadRequest(new { success = false, message = ex.MessageText });
             }
             catch (Exception ex)
             {

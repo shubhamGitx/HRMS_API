@@ -22,9 +22,21 @@ namespace hrmsAPI.MODEL.Payroll
         [Range(1, int.MaxValue, ErrorMessage = "Calculation priority must be greater than zero.")]
         public int CalcPriority { get; set; }
 
+        public decimal? DefaultValue { get; set; }
+
+        public string? DefaultBaseComponentCode { get; set; }
+
+        public decimal? DefaultMaxCap { get; set; }
+
+        public string? DefaultFormula { get; set; }
+
+        public bool IsMatrixLinked { get; set; }
+
         public bool IsProrated { get; set; }
 
         public bool IsTaxable { get; set; }
+
+        public bool IsActive { get; set; } = true;
     }
 
     // 2. GET - Pay Component Details
@@ -52,6 +64,16 @@ namespace hrmsAPI.MODEL.Payroll
 
         public bool IsTaxable { get; set; }
 
+        public decimal? DefaultValue { get; set; }
+
+        public string? DefaultBaseComponentCode { get; set; }
+
+        public decimal? DefaultMaxCap { get; set; }
+
+        public string? DefaultFormula { get; set; }
+
+        public bool IsMatrixLinked { get; set; }
+
         public bool IsActive { get; set; }
     }
 
@@ -70,9 +92,21 @@ namespace hrmsAPI.MODEL.Payroll
         [Range(1, int.MaxValue, ErrorMessage = "Calculation priority must be greater than zero.")]
         public int CalcPriority { get; set; }
 
+        public decimal? DefaultValue { get; set; }
+
+        public string? DefaultBaseComponentCode { get; set; }
+
+        public decimal? DefaultMaxCap { get; set; }
+
+        public string? DefaultFormula { get; set; }
+
+        public bool IsMatrixLinked { get; set; }
+
         public bool IsProrated { get; set; }
 
         public bool IsTaxable { get; set; }
+
+        public bool IsActive { get; set; }
     }
 
     // 4. GET - Search and Filter

@@ -89,6 +89,12 @@ namespace HRMSAPI.BAL.Payroll
             // Normalize input values
             model.Code = model.Code.Trim().ToUpper();
             model.Name = model.Name.Trim();
+            model.DefaultBaseComponentCode = string.IsNullOrWhiteSpace(model.DefaultBaseComponentCode)
+                ? null
+                : model.DefaultBaseComponentCode.Trim().ToUpperInvariant();
+            model.DefaultFormula = string.IsNullOrWhiteSpace(model.DefaultFormula)
+                ? null
+                : model.DefaultFormula.Trim();
 
             long componentId =
                 await _dal.InsertPayComponent(model);
@@ -130,6 +136,12 @@ namespace HRMSAPI.BAL.Payroll
             }
 
             model.Name = model.Name.Trim();
+            model.DefaultBaseComponentCode = string.IsNullOrWhiteSpace(model.DefaultBaseComponentCode)
+                ? null
+                : model.DefaultBaseComponentCode.Trim().ToUpperInvariant();
+            model.DefaultFormula = string.IsNullOrWhiteSpace(model.DefaultFormula)
+                ? null
+                : model.DefaultFormula.Trim();
 
             int rowsAffected =
                 await _dal.UpdatePayComponent(componentId, model);
@@ -239,6 +251,10 @@ namespace HRMSAPI.BAL.Payroll
             if (model.CalcPriority <= 0)
                 return "Calculation priority must be greater than zero.";
 
+            if ((model.DefaultValue.HasValue && model.DefaultValue.Value < 0) ||
+                (model.DefaultMaxCap.HasValue && model.DefaultMaxCap.Value < 0))
+                return "Default values and maximum caps must be zero or greater.";
+
             return null;
         }
 
@@ -265,6 +281,10 @@ namespace HRMSAPI.BAL.Payroll
 
             if (model.CalcPriority <= 0)
                 return "Calculation priority must be greater than zero.";
+
+            if ((model.DefaultValue.HasValue && model.DefaultValue.Value < 0) ||
+                (model.DefaultMaxCap.HasValue && model.DefaultMaxCap.Value < 0))
+                return "Default values and maximum caps must be zero or greater.";
 
             return null;
         }

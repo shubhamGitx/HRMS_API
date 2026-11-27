@@ -1,5 +1,6 @@
 ﻿
 using System.Data;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Dapper;
 using hrmsAPI.MODEL.Payroll;
@@ -9,6 +10,7 @@ namespace hrmsAPI.DAL.Payroll
 {
     public class SalaryConfigurationDAL
     {
+        private static readonly JsonSerializerOptions SalaryDetailJsonOptions = new(JsonSerializerDefaults.Web);
         private readonly string _connectionString;
 
         public SalaryConfigurationDAL(
@@ -134,16 +136,23 @@ namespace hrmsAPI.DAL.Payroll
             {
                 await con.OpenAsync();
 
-                return await con.QueryFirstOrDefaultAsync<SalaryConfigurationDetailModel>(
-                    @"SELECT *
-                      FROM payroll.fn_get_salary_configuration_by_id(
-                          @p_employee_id
-                      );",
-                    new
-                    {
-                        p_employee_id = employeeId
-                    }
-                );
+                var details = await con.QueryFirstOrDefaultAsync<SalaryConfigurationDetailModel>(
+                    @"SELECT * FROM payroll.fn_get_salary_configuration_by_id(@p_employee_id);",
+                    new { p_employee_id = employeeId });
+
+                if (details?.ComponentsJson is string componentsJson)
+                {
+                    details.Components = JsonSerializer.Deserialize<List<SavedSalaryComponentModel>>(
+                        componentsJson, SalaryDetailJsonOptions)
+                        ?? throw new InvalidOperationException("The salary component payload must be a JSON array.");
+                }
+                else if (details?.SalaryConfigurationId is not null)
+                {
+                    throw new InvalidOperationException(
+                        "The salary detail function must return ComponentsJson for an existing salary header.");
+                }
+
+                return details;
             }
         }
 

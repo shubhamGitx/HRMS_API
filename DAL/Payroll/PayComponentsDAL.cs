@@ -106,8 +106,14 @@ namespace hrmsAPI.DAL.Payroll
                         @p_component_type_id,
                         @p_calc_type_id,
                         @p_calc_priority,
+                        @p_default_value,
+                        @p_default_base_component_code,
+                        @p_default_max_cap,
+                        @p_default_formula,
+                        @p_is_matrix_linked,
                         @p_is_prorated,
-                        @p_is_taxable
+                        @p_is_taxable,
+                        @p_is_active
                     );",
                     new
                     {
@@ -116,8 +122,14 @@ namespace hrmsAPI.DAL.Payroll
                         p_component_type_id = model.ComponentTypeId,
                         p_calc_type_id = model.CalcTypeId,
                         p_calc_priority = model.CalcPriority,
+                        p_default_value = model.DefaultValue,
+                        p_default_base_component_code = model.DefaultBaseComponentCode,
+                        p_default_max_cap = model.DefaultMaxCap,
+                        p_default_formula = model.DefaultFormula,
+                        p_is_matrix_linked = model.IsMatrixLinked,
                         p_is_prorated = model.IsProrated,
-                        p_is_taxable = model.IsTaxable
+                        p_is_taxable = model.IsTaxable,
+                        p_is_active = model.IsActive
                     });
             }
         }
@@ -139,8 +151,14 @@ namespace hrmsAPI.DAL.Payroll
                         @p_component_type_id,
                         @p_calc_type_id,
                         @p_calc_priority,
+                        @p_default_value,
+                        @p_default_base_component_code,
+                        @p_default_max_cap,
+                        @p_default_formula,
+                        @p_is_matrix_linked,
                         @p_is_prorated,
-                        @p_is_taxable
+                        @p_is_taxable,
+                        @p_is_active
                     );",
                     new
                     {
@@ -149,8 +167,14 @@ namespace hrmsAPI.DAL.Payroll
                         p_component_type_id = model.ComponentTypeId,
                         p_calc_type_id = model.CalcTypeId,
                         p_calc_priority = model.CalcPriority,
+                        p_default_value = model.DefaultValue,
+                        p_default_base_component_code = model.DefaultBaseComponentCode,
+                        p_default_max_cap = model.DefaultMaxCap,
+                        p_default_formula = model.DefaultFormula,
+                        p_is_matrix_linked = model.IsMatrixLinked,
                         p_is_prorated = model.IsProrated,
-                        p_is_taxable = model.IsTaxable
+                        p_is_taxable = model.IsTaxable,
+                        p_is_active = model.IsActive
                     });
             }
         }
